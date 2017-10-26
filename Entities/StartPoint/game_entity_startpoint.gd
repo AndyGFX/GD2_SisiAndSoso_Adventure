@@ -1,6 +1,7 @@
 extends Area2D
 
 var item_id = 0
+var item_type = "start_point"
 
 #------------------------------------------------
 # Hide icon on start
@@ -11,6 +12,14 @@ func _ready():
 	else:
 		get_node("Sprite").set_hidden(true)
 
+#------------------------------------------------
+# Exit from zone
+#------------------------------------------------
+func Respawn(player):
+	# additional code here
+	player.set_global_pos(self.get_global_pos())
+	pass
+	
 #------------------------------------------------
 # Enter to zone
 #------------------------------------------------

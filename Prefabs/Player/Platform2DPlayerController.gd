@@ -103,7 +103,7 @@ func _ready():
 # Respawn player position on level start if exist entity GAME_PlayerStart in scene
 # -----------------------------------------------------------
 func Respawn():
-	var spawn_point = Utils.find_node("GAME_PlayerStart")
+	var spawn_point = Utils.find_node("PlayerStart")
 	if spawn_point:
 		spawn_point.Respawn(self)
 			

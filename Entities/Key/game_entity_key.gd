@@ -3,6 +3,7 @@ extends Area2D
 
 export var key_name = "key"
 export var item_id = 0
+var item_type = "key"
 
 func _get_item_rect():
 	return self.get_node("Sprite").get_item_rect()

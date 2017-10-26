@@ -8,7 +8,7 @@ export var need_key = false
 export var teleport_type = 0
 
 var eventOwner = null
-
+var item_type = "teleport"
 func _ready():
 
 	pass

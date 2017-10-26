@@ -3,7 +3,6 @@ extends Area2D
 export var next_scene = ""
 var item_id = 0
 var item_type = "end_point"
-
 #------------------------------------------------
 # Hide icon on start
 #------------------------------------------------

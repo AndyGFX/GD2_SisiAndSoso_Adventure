@@ -85,59 +85,59 @@ func CheckProperties(obj):
 	var type = obj.get_meta("type")
 
 	if type == "COIN":
-		if !obj.has_meta("item_amount"): obj.set_meta("item_amount",1)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"item_amount",1)
+		Check(obj,"item_id",0)
 
 	if type == "AMMO":
-		if !obj.has_meta("item_amount"): obj.set_meta("item_amount",10)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"item_amount",10)
+		Check(obj,"item_id",0)
 
 	if type == "HEALTH":
-		if !obj.has_meta("item_amount"): obj.set_meta("item_amount",100)
-		if !obj.has_meta("item_limit"): obj.set_meta("item_limit",100)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"item_amount",100)
+		Check(obj,"item_limit",100)
+		Check(obj,"item_id",0)
 
 	if type == "KEY":
-		if !obj.has_meta("key_name"): obj.set_meta("key_name","<undefined>")
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"key_name","<undefined>")
+		Check(obj,"item_id",0)
 
 	if type == "POWER_UP_SPEED":
-		if !obj.has_meta("new_speed"): obj.set_meta("new_speed",300)
-		if !obj.has_meta("time_to_off"): obj.set_meta("time_to_off",10)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"new_speed",300)
+		Check(obj,"time_to_off",10)
+		Check(obj,"item_id",0)
 
 	if type == "POWER_UP_JUMP":
-		if !obj.has_meta("new_jump_force"): obj.set_meta("new_jump_force",300)
-		if !obj.has_meta("time_to_off"): obj.set_meta("time_to_off",10)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"new_jump_force",300)
+		Check(obj,"time_to_off",10)
+		Check(obj,"item_id",0)
 
 	if type == "POWER_UP_GRAVITY":
-		if !obj.has_meta("new_gravity_x"): obj.set_meta("new_gravity_x",0)
-		if !obj.has_meta("new_gravity_y"): obj.set_meta("new_gravity_y",1000)
-		if !obj.has_meta("time_to_off"): obj.set_meta("time_to_off",10)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"new_gravity_x",0)
+		Check(obj,"new_gravity_y",1000)
+		Check(obj,"time_to_off",10)
+		Check(obj,"item_id",0)
 
 	if type == "MSG_INFO":
-		if !obj.has_meta("info_text"): obj.set_meta("info_text","<undefined>")
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
-		if !obj.has_meta("panel_offset_x"): obj.set_meta("panel_offset_x",0)
-		if !obj.has_meta("panel_offset_y"): obj.set_meta("panel_offset_y",0)
+		Check(obj,"info_text","<undefined>")
+		Check(obj,"item_id",0)
+		Check(obj,"panel_offset_x",0)
+		Check(obj,"panel_offset_y",0)
 
 
 	if type == "TELEPORT":
-		if !obj.has_meta("key_name"): obj.set_meta("key_name","<undefined>")
-		if !obj.has_meta("need_key"): obj.set_meta("need_key",false)
-		if !obj.has_meta("on_key"): obj.set_meta("on_key","key_up")
-		if !obj.has_meta("target_name"): obj.set_meta("target_name","<undefined>")
-		if !obj.has_meta("teleport_type"): obj.set_meta("teleport_type",0)
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"key_name","<undefined>")
+		Check(obj,"need_key",false)
+		Check(obj,"on_key","key_up")
+		Check(obj,"target_name","<undefined>")
+		Check(obj,"teleport_type",0)
+		Check(obj,"item_id",0)
 
 	if type == "START_POINT":
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
+		Check(obj,"item_id",0)
 
 	if type == "END_POINT":
-		if !obj.has_meta("item_id"): obj.set_meta("item_id",0)
-		if !obj.has_meta("next_scene"): obj.set_meta("next_scene","<undefined>")
+		Check(obj,"item_id",0)
+		Check(obj,"next_scene","<undefined>")
 
 	return obj
 
@@ -270,11 +270,17 @@ func DumpProperties(obj):
 		Dump(obj,"teleport_type")
 
 # -------------------------------------------------------
-# Dump entity property to console
+# Helpert for dump entity property to console
 # -------------------------------------------------------
 func Dump(obj,prop):
 	if obj.has_meta(prop): print("    - "+prop+" = "+str(obj.get_meta(prop)))
 
+# -------------------------------------------------------
+# Helpert for check entity property and set default value
+# -------------------------------------------------------
+func Check(obj,prop,val):
+	if !obj.has_meta(prop): obj.set_meta(prop,val)
+	
 # -------------------------------------------------------
 # Build and replace objects in scene
 # -------------------------------------------------------

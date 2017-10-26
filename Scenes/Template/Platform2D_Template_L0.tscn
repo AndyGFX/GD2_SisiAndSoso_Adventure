@@ -1,0 +1,50 @@
+[gd_scene load_steps=4 format=1]
+
+[ext_resource path="res://Sprites/TestTileset/TestTileset.tres" type="TileSet" id=1]
+[ext_resource path="res://addons/game_entities/game_node_playerstart.gd" type="Script" id=2]
+[ext_resource path="res://addons/game_entities/game_node_icon_playerstart.png" type="Texture" id=3]
+
+[node name="Level_0" type="Node2D"]
+
+[node name="TileMap" type="TileMap" parent="."]
+
+mode = 0
+tile_set = ExtResource( 1 )
+cell/size = Vector2( 16, 16 )
+cell/quadrant_size = 16
+cell/custom_transform = Matrix32( 1, 0, 0, 1, 0, 0 )
+cell/half_offset = 2
+cell/tile_origin = 0
+cell/y_sort = false
+collision/use_kinematic = false
+collision/friction = 1.0
+collision/bounce = 0.0
+collision/layers = 1
+collision/mask = 1
+occluder/light_mask = 1
+tile_data = IntArray( 786444, 24, 786445, 25, 786446, 26, 851980, 32, 851981, 33, 851982, 34, 917504, 0, 917505, 1, 917506, 1, 917507, 1, 917508, 1, 917509, 1, 917510, 1, 917511, 1, 917512, 1, 917513, 1, 917514, 1, 917515, 5, 917516, 32, 917517, 33, 917518, 34, 917519, 0, 917520, 1, 917521, 1, 917522, 1, 917523, 1, 917524, 1, 917525, 1, 917526, 1, 917527, 1, 917528, 1, 917529, 5, 983040, 16, 983041, 17, 983042, 17, 983043, 17, 983044, 17, 983045, 17, 983046, 17, 983047, 17, 983048, 17, 983049, 17, 983050, 17, 983051, 21, 983052, 40, 983053, 41, 983054, 42, 983055, 16, 983056, 17, 983057, 17, 983058, 17, 983059, 17, 983060, 17, 983061, 17, 983062, 17, 983063, 17, 983064, 17, 983065, 21 )
+
+[node name="Container" type="Node2D" parent="."]
+
+[node name="GameEntities" type="Area2D" parent="."]
+
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+
+[node name="GAME_PlayerStart" type="Area2D" parent="GameEntities"]
+
+transform/pos = Vector2( 217, 175 )
+input/pickable = true
+gravity_vec = Vector2( 0, 1 )
+gravity = 98.0
+linear_damp = 0.1
+angular_damp = 1.0
+script/script = ExtResource( 2 )
+__meta__ = {
+"_editor_icon": ExtResource( 3 )
+}
+
+

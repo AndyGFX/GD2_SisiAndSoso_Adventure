@@ -26,6 +26,7 @@ var anim = null
 var fire = null
 var teleport_info = null
 var msg_info = null
+var container = null;
 
 # signal for update viewport
 signal moveSignal
@@ -39,49 +40,61 @@ func _get_item_rect():
 # ---------------------------------------------------------
 func _ready():
 
-	# create container instance
-	var container =  Utils.find_node("Container")
+	# find container instance in scene
+	container =  Utils.find_node("Container")
 	
+	# create container instance in scene if missing
+	if !container:
+		container = Node2D.new();
+		container.set_name("Container")
+		get_parent().call_deferred("add_child",container)		
+
+
 	# preload Inventory data
 	Inventory.Load();
 
-	#create input control
-	key_left = cInput.new("key_left"); container.add_child(key_left)	
+	#create input control	
+	key_left = cInput.new("key_left"); container.add_child(key_left)
 	key_right = cInput.new("key_right"); container.add_child(key_right)
 	key_jump = cInput.new("key_jump"); container.add_child(key_jump)
 	key_fire = cInput.new("key_fire"); container.add_child(key_fire)
 	key_crunch = cInput.new("key_down"); container.add_child(key_crunch)
-	
+
 	# get player object
+	
 	player = get_node(".")
 
 	# create platformer2D move controller
+	
 	move = cMove.new(player, key_left, key_right, key_jump, key_crunch, playerMaxSpeed, acceleration, jumpForce, jumpTreshold)
 
 	# create AnimationState class
+	
 	anim = cAnimState.new(get_node("PlayerAnimation/AnimationPlayer"))
 
-	# create shooting instance and bullet container	
+	# create shooting instance and bullet container
+	
 	var fire_pivot = get_node("FireOrigin_RIGHT")
 	fire = cShooting.new(move, key_fire,Global.bullet_prefab,container,fire_pivot,false)
+
 	#disable rapid fire
-	fire.RapidFire(false)
 	
-	# create teleport button info instance
+	fire.RapidFire(false)
+
+	# create teleport button info instance	
 	teleport_info = Global.teleport_button_info.instance()
 	teleport_info.set_global_pos(Vector2(0,-5000));
 	container.add_child(teleport_info)
 
-	# create message info panel instance
+	# create message info panel instance	
 	msg_info = Global.msg_info_panel.instance()
 	msg_info.set_global_pos(Vector2(0,-5000))
 	container.add_child(msg_info)
 
-	# enable update per frame
+	# enable update per frame	
 	set_fixed_process(true)
 
-
-	# prepare inventory/gamedata to default values
+	# prepare inventory/gamedata to default values	
 	Inventory.Set('coins',0);
 	Inventory.Set('health',100);
 	Inventory.Set('ammo',100);
@@ -89,16 +102,17 @@ func _ready():
 	Inventory.Set('key_B',false);
 	Inventory.Set('key_C',false);
 	Inventory.Set('key_D',false);
-
 	Inventory.Save()
-	
-	# get sound fx library for player
+
+	# get sound fx library for player	
 	Global.player_sfx = Utils.find_node("PlayerSoundFX")
-	
+
+	# respawn play at 'start_point'
 	Respawn()
-	
-	
-	
+
+	pass
+
+
 # -----------------------------------------------------------
 # Respawn player position on level start if exist entity GAME_PlayerStart in scene
 # -----------------------------------------------------------
@@ -106,7 +120,7 @@ func Respawn():
 	var spawn_point = Utils.find_node("PlayerStart")
 	if spawn_point:
 		spawn_point.Respawn(self)
-			
+
 # ---------------------------------------------------------
 # FIXED UPDATE LOOP
 # ---------------------------------------------------------
@@ -136,16 +150,22 @@ func _exit_tree():
 # ---------------------------------------------------------
 func _on_TriggerDetector_area_enter( area ):
 
-	# | pickup ITEM
+	# | pickup COIN
 	# -----------------------------------------------------
-	if area.has_method('pickup'):
-		area.pickup()
+	if area.has_method('PickupCoin'): area.PickupCoin()
 
+	# | pickup AMMO
+	# -----------------------------------------------------
+	if area.has_method('PickupAmmo'): area.PickupAmmo()
 
 	# | pickup KEY
 	# -----------------------------------------------------
-	if area.has_method('PickupKey'):
-		area.PickupKey()
+	if area.has_method('PickupKey'): area.PickupKey()
+	
+	# | pickup HEALTH
+	# -----------------------------------------------------
+	if area.has_method('PickupHealth'): area.PickupHealth()
+	
 
 	# | show message info on enter trigger zone
 	# -----------------------------------------------------
@@ -166,8 +186,7 @@ func _on_TriggerDetector_area_enter( area ):
 	if area.has_method('PickupPowerUpJump'):
 
 		# setup powerup
-		var jump = Global.powerup_jump.instance()
-		var container =  Utils.find_node("Container")
+		var jump = Global.powerup_jump.instance()		
 		jump.Start(move,container,area.time_to_off,area.new_jump_force)
 
 		# remove powerup
@@ -178,8 +197,7 @@ func _on_TriggerDetector_area_enter( area ):
 	if area.has_method('PickupPowerUpSpeed'):
 
 		# setup powerup
-		var speed = Global.powerup_speed.instance()
-		var container =  Utils.find_node("Container")
+		var speed = Global.powerup_speed.instance()		
 		speed.Start(move,container,area.time_to_off,area.new_speed)
 
 		# remove powerup
@@ -191,7 +209,6 @@ func _on_TriggerDetector_area_enter( area ):
 
 		# setup powerup
 		var grav = Global.powerup_gravity.instance()
-		var container =  Utils.find_node("Container")
 		grav.Start(move,container,area.time_to_off,area.new_gravity)
 
 		# remove powerup

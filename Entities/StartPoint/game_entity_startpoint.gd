@@ -25,3 +25,11 @@ func ExitFromStartPoint():
 	# additional code here
 	pass
 	
+#------------------------------------------------
+# Exit from zone
+#------------------------------------------------
+func Respawn(player):
+	# additional code here
+	player.set_global_pos(self.get_global_pos())
+	pass	
+	

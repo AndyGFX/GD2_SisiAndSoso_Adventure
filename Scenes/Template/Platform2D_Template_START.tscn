@@ -26,7 +26,5 @@ jumpForce = 300
 
 [node name="SoundFX" parent="." instance=ExtResource( 5 )]
 
-[node name="Container" type="Node2D" parent="."]
-
 
 [editable path="Player"]

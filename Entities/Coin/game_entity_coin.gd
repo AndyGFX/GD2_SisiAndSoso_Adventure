@@ -1,7 +1,7 @@
 extends Area2D
 
 
-var item_type = "coin"
+var item_type = "coins"
 export var item_amount = 1
 export var item_id = 0
 

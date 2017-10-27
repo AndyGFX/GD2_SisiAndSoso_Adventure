@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="2017.09.13" orientation="orthogonal" renderorder="left-up" width="42" height="27" tilewidth="16" tileheight="16" infinite="0" nextobjectid="35">
+<map version="1.0" tiledversion="2017.10.11" orientation="orthogonal" renderorder="left-up" width="42" height="27" tilewidth="16" tileheight="16" infinite="0" nextobjectid="35">
  <tileset firstgid="1" source="TestTileset.tsx"/>
  <tileset firstgid="65" source="Objects_Tileset.tsx"/>
  <layer name="Layer-BACK" width="42" height="27">
@@ -40,9 +40,21 @@
     <property name="key_name" value="KEY_A"/>
    </properties>
   </object>
-  <object id="16" name="PowerUpSpeed" type="POWER_UP_SPEED" gid="73" x="337" y="383" width="16" height="16"/>
-  <object id="17" name="PowerUpJump" type="POWER_UP_JUMP" gid="74" x="399" y="383" width="16" height="16"/>
-  <object id="18" name="PowerUpGrav" type="POWER_UP_GRAVITY" gid="75" x="448" y="382" width="16" height="16"/>
+  <object id="16" name="PowerUpSpeed" type="POWER_UP_SPEED" gid="73" x="337" y="383" width="16" height="16">
+   <properties>
+    <property name="new_speed" type="int" value="250"/>
+   </properties>
+  </object>
+  <object id="17" name="PowerUpJump" type="POWER_UP_JUMP" gid="74" x="399" y="383" width="16" height="16">
+   <properties>
+    <property name="new_jump_force" type="int" value="350"/>
+   </properties>
+  </object>
+  <object id="18" name="PowerUpGrav" type="POWER_UP_GRAVITY" gid="75" x="448" y="382" width="16" height="16">
+   <properties>
+    <property name="new_gravity_y" type="int" value="500"/>
+   </properties>
+  </object>
   <object id="19" name="InfoMsg1" type="MSG_INFO" gid="81" x="304" y="321" width="16" height="16">
    <properties>
     <property name="info_text" value="Test msg info nanel"/>

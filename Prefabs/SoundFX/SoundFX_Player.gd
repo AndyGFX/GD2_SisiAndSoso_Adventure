@@ -7,14 +7,14 @@ var player = null
 # -----------------------------------------------------------
 func _ready():
 	player = get_node("SFXPlayer")
-	
+
 	pass
 
 # -----------------------------------------------------------
 # Play sound fx by name and return voiceID
 # -----------------------------------------------------------
-func Play(name):	
+func Play(name):
 	return player.play(name)
-	
-	
-	
+
+
+

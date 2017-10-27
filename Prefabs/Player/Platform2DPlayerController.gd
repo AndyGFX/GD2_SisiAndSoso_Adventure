@@ -24,6 +24,7 @@ var player = null
 var move = null
 var anim = null
 var fire = null
+
 var teleport_info = null
 var msg_info = null
 var container = null;
@@ -42,18 +43,18 @@ func _ready():
 
 	# find container instance in scene
 	container =  Utils.find_node("Container")
-	
+
 	# create container instance in scene if missing
 	if !container:
 		container = Node2D.new();
 		container.set_name("Container")
-		get_parent().call_deferred("add_child",container)		
+		get_parent().call_deferred("add_child",container)
 
 
 	# preload Inventory data
 	Inventory.Load();
 
-	#create input control	
+	#create input control
 	key_left = cInput.new("key_left"); container.add_child(key_left)
 	key_right = cInput.new("key_right"); container.add_child(key_right)
 	key_jump = cInput.new("key_jump"); container.add_child(key_jump)
@@ -61,50 +62,50 @@ func _ready():
 	key_crunch = cInput.new("key_down"); container.add_child(key_crunch)
 
 	# get player object
-	
+
 	player = get_node(".")
 
 	# create platformer2D move controller
-	
+
 	move = cMove.new(player, key_left, key_right, key_jump, key_crunch, playerMaxSpeed, acceleration, jumpForce, jumpTreshold)
 
 	# create AnimationState class
-	
+
 	anim = cAnimState.new(get_node("PlayerAnimation/AnimationPlayer"))
 
 	# create shooting instance and bullet container
-	
+
 	var fire_pivot = get_node("FireOrigin_RIGHT")
 	fire = cShooting.new(move, key_fire,Global.bullet_prefab,container,fire_pivot,false)
 
 	#disable rapid fire
-	
+
 	fire.RapidFire(false)
 
-	# create teleport button info instance	
+	# create teleport button info instance
 	teleport_info = Global.teleport_button_info.instance()
 	teleport_info.set_global_pos(Vector2(0,-5000));
 	container.add_child(teleport_info)
 
-	# create message info panel instance	
+	# create message info panel instance
 	msg_info = Global.msg_info_panel.instance()
 	msg_info.set_global_pos(Vector2(0,-5000))
 	container.add_child(msg_info)
 
-	# enable update per frame	
+	# enable update per frame
 	set_fixed_process(true)
 
-	# prepare inventory/gamedata to default values	
+	# prepare inventory/gamedata to default values
 	Inventory.Set('coins',0);
 	Inventory.Set('health',100);
 	Inventory.Set('ammo',100);
-	Inventory.Set('key_A',false);
-	Inventory.Set('key_B',false);
-	Inventory.Set('key_C',false);
-	Inventory.Set('key_D',false);
+	Inventory.Set('KEY_A',false);
+	Inventory.Set('KEY_B',false);
+	Inventory.Set('KEY_C',false);
+	Inventory.Set('KEY_D',false);
 	Inventory.Save()
 
-	# get sound fx library for player	
+	# get sound fx library for player
 	Global.player_sfx = Utils.find_node("PlayerSoundFX")
 
 	# respawn play at 'start_point'
@@ -161,17 +162,17 @@ func _on_TriggerDetector_area_enter( area ):
 	# | pickup KEY
 	# -----------------------------------------------------
 	if area.has_method('PickupKey'): area.PickupKey()
-	
+
 	# | pickup HEALTH
 	# -----------------------------------------------------
 	if area.has_method('PickupHealth'): area.PickupHealth()
-	
+
 
 	# | show message info on enter trigger zone
 	# -----------------------------------------------------
 	if area.has_method('EnterToMsgZone'):
 		msg_info.set_global_pos(area.get_global_pos()+area.panel_offset)
-		msg_info.Show(area.msg_text)
+		msg_info.Show(area.info_text)
 		area.EnterToMsgZone()
 
 	# | teleport to target door when player press 'key_up'
@@ -186,7 +187,7 @@ func _on_TriggerDetector_area_enter( area ):
 	if area.has_method('PickupPowerUpJump'):
 
 		# setup powerup
-		var jump = Global.powerup_jump.instance()		
+		var jump = Global.powerup_jump.instance()
 		jump.Start(move,container,area.time_to_off,area.new_jump_force)
 
 		# remove powerup
@@ -197,7 +198,7 @@ func _on_TriggerDetector_area_enter( area ):
 	if area.has_method('PickupPowerUpSpeed'):
 
 		# setup powerup
-		var speed = Global.powerup_speed.instance()		
+		var speed = Global.powerup_speed.instance()
 		speed.Start(move,container,area.time_to_off,area.new_speed)
 
 		# remove powerup

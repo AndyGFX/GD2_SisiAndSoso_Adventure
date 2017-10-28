@@ -1,5 +1,12 @@
 extends Node2D
 
+# best choise for screen resolution:
+#	256x144
+#	384x216
+#	512x288
+#	640x360
+#	768x432
+
 onready var screen_size = Vector2(Globals.get("display/width"), Globals.get("display/height"))
 onready var player = get_node("Player")
 onready var HUD = get_node("HUD")
